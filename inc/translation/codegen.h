@@ -4,6 +4,6 @@
 #include <stddef.h>
 #include <stdio.h>
 
-extern size_t	loop_id;
+extern size_t loop_id;
 
-int		write_instructions(FILE *out, PagedVector *prog);
+int write_instructions(FILE *out, PagedVector_t *prog);

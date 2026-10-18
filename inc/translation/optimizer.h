@@ -2,4 +2,4 @@
 
 #include "utils/paged_vector.h"
 
-PagedVector	*pass_contract(PagedVector *prog);
+PagedVector_t *pass_contract(PagedVector_t *prog);

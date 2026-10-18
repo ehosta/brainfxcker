@@ -3,7 +3,8 @@
 #include "utils/paged_vector.h"
 #include <stddef.h>
 
-typedef enum {
+typedef enum NodeKind
+{
 	NODE_INC_PTR,
 	NODE_DEC_PTR,
 	NODE_INC_VAL,
@@ -11,19 +12,22 @@ typedef enum {
 	NODE_OUTPUT,
 	NODE_INPUT,
 	NODE_LOOP
-} NodeKind;
+} NodeKind_t;
 
-typedef struct Node {
-	NodeKind	 kind;
+typedef struct Node
+{
+	NodeKind_t kind;
 	struct Node *children;
-	size_t		 child_count;
-	size_t		 line, col;
-} Node;
+	size_t child_count;
+	size_t line, col;
+} Node_t;
 
-typedef struct {
-	Node	*nodes;
-	size_t	count;
-} AST;
+typedef struct AST
+{
+	Node_t *nodes;
+	size_t count;
+} AST_t;
 
-void	free_nodes(Node *nodes, size_t count);
-size_t	 parse_block(PagedVector *tokens, size_t start, size_t len, Node **out, size_t *out_count);
+void free_nodes(Node_t *nodes, size_t count);
+size_t parse_block(PagedVector_t *tokens, size_t start, size_t len,
+				   Node_t **out, size_t *out_count);

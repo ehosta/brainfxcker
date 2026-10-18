@@ -38,6 +38,7 @@ PagedVector	*lex_file(const char *path)
 			case ',': kind = TOK_INPUT;		break;
 			case '[': kind = TOK_LOOP_OPEN; break;
 			case ']': kind = TOK_LOOP_CLOSE;break;
+			case '#': kind = 
 			default: continue;
 		}
 		pv_push(tl, &(Token){kind, line, col});

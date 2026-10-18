@@ -1,0 +1,7 @@
+arguments:
+--output <value> / -o <value>
+--optimize [value] / -O [value]
+--asm [value] / -s [value]
+
+options:
+--help / -h

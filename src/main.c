@@ -40,11 +40,11 @@ int	main(int argc, char *argv[]) {
 	prog = pass_contract(prog);
 
 	Output	out = create_output(argv[1]);
-	write_instructions(out.asm.file, prog);
-	fclose(out.asm.file);
-	int	_ = system(out.asm.cmd);
+	write_instructions(out.asm_.file, prog);
+	fclose(out.asm_.file);
+	int	_ = system(out.asm_.cmd);
 	_ = system(out.object.cmd);
-	remove(out.asm.path);
+	remove(out.asm_.path);
 	remove(out.object.path);
 	pv_free(lexed);
 	pv_free(prog);

@@ -1,12 +1,14 @@
 [
   {
+    "file": "src/main.c",
     "arguments": [
       "/usr/bin/gcc",
       "-Wall",
       "-Wextra",
       "-Werror",
       "--std=c99",
-      "-D_POSIX_C_SOURCE=200809L",
+      "-D_XOPEN_SOURCE=700",
+      "-MD",
       "-g3",
       "-O3",
       "-flto",
@@ -16,12 +18,11 @@
       "-falign-functions=32",
       "-I./inc/",
       "-c",
+      "src/main.c",
       "-o",
-      "build/init/args.o",
-      "src/init/args.c"
+      "build/main.o"
     ],
-    "directory": "/Users/elouannh/code/brainfxcker",
-    "file": "/Users/elouannh/code/brainfxcker/src/init/args.c",
-    "output": "/Users/elouannh/code/brainfxcker/build/init/args.o"
+    "directory": "/home/panda/code/brainfxcker",
+    "output": "build/main.o"
   }
 ]

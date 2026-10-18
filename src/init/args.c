@@ -3,19 +3,12 @@
 #include <stddef.h>
 #include <string.h>
 
-PagedVector *parse_args(int argc, char *argv[])
+PagedVector_t *parse_args(int argc, char *argv[])
 {
-	PagedVector *out = pv_create(sizeof(Arg));
+	PagedVector_t *out = pv_create(1);
 
-	for (size_t i = 0; i < (size_t)argc; ++i)
-	{
-		const char *s = argv[i];
-
-		if (!strcmp(s, "-h") || !strcmp(s, "--help"))
-		{
-			pv_push();
-		}
-	}
+	(void)argc;
+	(void)argv;
 
 	return out;
 }

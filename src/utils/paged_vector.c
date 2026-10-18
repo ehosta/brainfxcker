@@ -4,9 +4,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-PagedVector *pv_create(size_t sib)
+PagedVector_t *pv_create(size_t sib)
 {
-	PagedVector *res = malloc(sizeof(PagedVector));
+	PagedVector_t *res = malloc(sizeof(PagedVector_t));
 	if (!res)
 		return NULL;
 
@@ -17,14 +17,14 @@ PagedVector *pv_create(size_t sib)
 	return res;
 }
 
-void *pv_get(PagedVector *vec, size_t i)
+void *pv_get(PagedVector_t *vec, size_t i)
 {
 	size_t page = i >> PAGE_BITS;
 	size_t offset = i & PAGE_MASK;
 	return (char *)vec->pages[page] + offset * vec->sib;
 }
 
-void *pv_push(PagedVector *vec, void *element)
+void *pv_push(PagedVector_t *vec, void *element)
 {
 	if ((vec->count & PAGE_MASK) == 0)
 	{
@@ -46,7 +46,7 @@ void *pv_push(PagedVector *vec, void *element)
 	return slot;
 }
 
-void pv_free(PagedVector *vec)
+void pv_free(PagedVector_t *vec)
 {
 	for (size_t i = 0; i < vec->page_count; ++i)
 		free(vec->pages[i]);

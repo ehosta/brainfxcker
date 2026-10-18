@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void	free_nodes(Node *nodes, size_t count)
+void free_nodes(Node_t *nodes, size_t count)
 {
 	for (size_t i = 0; i < count; ++i)
 	{
@@ -15,37 +15,43 @@ void	free_nodes(Node *nodes, size_t count)
 	free(nodes);
 }
 
-size_t	parse_block(PagedVector *tokens, size_t start, size_t len, Node **out, size_t *out_count)
+size_t parse_block(PagedVector_t *tokens, size_t start, size_t len,
+				   Node_t **out, size_t *out_count)
 {
-	Node   *buf = NULL;
-	size_t  buf_cap = 0, buf_len = 0;
-	size_t  i = 0;
+	Node_t *buf = NULL;
+	size_t buf_cap = 0, buf_len = 0;
+	size_t i = 0;
 
 	while (i < len)
 	{
-		Token *tok = pv_get(tokens, start + i);
+		Token_t *tok = pv_get(tokens, start + i);
 
-		if (tok->kind == TOK_LOOP_CLOSE) break;
+		if (tok->kind == TOK_LOOP_CLOSE)
+			break;
 		if (buf_len >= buf_cap)
 		{
 			buf_cap = buf_cap ? buf_cap * 2 : 32;
-			buf = realloc(buf, buf_cap * sizeof(Node));
+			buf = realloc(buf, buf_cap * sizeof(Node_t));
 		}
 
-		Node node = {.kind = (NodeKind)tok->kind, .line = tok->line, .col = tok->col};
+		Node_t node = {
+			.kind = (NodeKind_t)tok->kind, .line = tok->line, .col = tok->col};
 
 		if (tok->kind == TOK_LOOP_OPEN)
 		{
-			size_t	consumed = parse_block(tokens, start + i + 1, len - i - 1, &node.children, &node.child_count);
-			Token	*close = pv_get(tokens, start + i + 1 + consumed);
+			size_t consumed = parse_block(tokens, start + i + 1, len - i - 1,
+										  &node.children, &node.child_count);
+			Token_t *close = pv_get(tokens, start + i + 1 + consumed);
 			if (close->kind != TOK_LOOP_CLOSE)
 			{
-				fprintf(stderr, "error: unmatched '[' at %zu:%zu\n", tok->line, tok->col);
+				fprintf(stderr, "error: unmatched '[' at %zu:%zu\n", tok->line,
+						tok->col);
 				exit(1);
 			}
 			i += consumed + 2;
 		}
-		else ++i;
+		else
+			++i;
 		buf[buf_len++] = node;
 	}
 

@@ -27,7 +27,7 @@ typedef struct Param
 
 typedef struct Option
 {
-	ParamName_t name;
+	OptionName_t name;
 	char *value;
 } Option_t;
 

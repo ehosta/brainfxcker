@@ -22,5 +22,5 @@ typedef struct Token
 	size_t col;
 } Token_t;
 
-PagedVector *lex_file(const char *path);
-void free_token_list(PagedVector *tl);
+PagedVector_t *lex_file(const char *path);
+void free_token_list(PagedVector_t *tl);

@@ -23,4 +23,4 @@ typedef struct IRInstr
 	int offset;
 } IRInstr_t;
 
-void gen_ir_nodes(PagedVector *prog, Node *nodes, size_t n);
+void gen_ir_nodes(PagedVector_t *prog, Node_t *nodes, size_t n);

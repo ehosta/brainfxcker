@@ -25,5 +25,5 @@ typedef struct Output
 	OutputData_t object;
 } Output_t;
 
-Output create_output(const char *path);
-void free_output(Output *out);
+Output_t create_output(const char *path);
+void free_output(Output_t *out);

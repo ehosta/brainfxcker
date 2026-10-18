@@ -1,16 +1,17 @@
+#include "init/lexer.h"
+#include "init/parser.h"
 #include "translation/codegen.h"
 #include "translation/ir.h"
-#include "init/lexer.h"
 #include "translation/optimizer.h"
 #include "translation/output.h"
-#include "init/parser.h"
 #include "utils/paged_vector.h"
 #include <stddef.h>
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>
 
-int verify_architecture() {
+int verify_architecture()
+{
 #if defined(__x86_64__) || defined(_M_X64)
 	// printf("Compiled for x86-64 architecture\n");
 	return 1;
@@ -23,8 +24,10 @@ int verify_architecture() {
 #endif
 }
 
-int	main(int argc, char *argv[]) {
-	if (!verify_architecture()) return EXIT_FAILURE;
+int main(int argc, char *argv[])
+{
+	if (!verify_architecture())
+		return EXIT_FAILURE;
 
 	if (argc ^ 2)
 	{
@@ -32,17 +35,17 @@ int	main(int argc, char *argv[]) {
 		exit(EXIT_FAILURE);
 	}
 
-	PagedVector	*lexed = lex_file(argv[1]);
-	AST			ast;
+	PagedVector_t *lexed = lex_file(argv[1]);
+	AST_t ast;
 	parse_block(lexed, 0, lexed->count, &ast.nodes, &ast.count);
-	PagedVector	*prog = pv_create(sizeof(IRInstr));
+	PagedVector_t *prog = pv_create(sizeof(IRInstr_t));
 	gen_ir_nodes(prog, ast.nodes, ast.count);
 	prog = pass_contract(prog);
 
-	Output	out = create_output(argv[1]);
+	Output_t out = create_output(argv[1]);
 	write_instructions(out.asm_.file, prog);
 	fclose(out.asm_.file);
-	int	_ = system(out.asm_.cmd);
+	int _ = system(out.asm_.cmd);
 	_ = system(out.object.cmd);
 	remove(out.asm_.path);
 	remove(out.object.path);
